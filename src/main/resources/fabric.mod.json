@@ -19,8 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.nylonmc.core.Core"
+      {
+        "adapter": "python",
+        "value": "cool_test"
+      }
     ]
+  },
+  "languageAdapters": {
+    "python": "io.github.nylonmc.core.PythonAdapter"
   },
 
   "depends": {
