@@ -9,8 +9,8 @@
     "Me!"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/NylonMC/NylonMC-Core",
+    "sources": "https://github.com/NylonMC/NylonMC-Core"
   },
 
   "license": "LGPL-3.0-or-later",
