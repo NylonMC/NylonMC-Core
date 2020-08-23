@@ -9,10 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.apache.commons.io.FileUtils;
 import org.beeware.rubicon.Python;
 
 public class Core {

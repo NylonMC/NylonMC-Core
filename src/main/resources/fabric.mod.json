@@ -17,14 +17,6 @@
   "icon": "assets/nylonmc-core/icon.png",
 
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      {
-        "adapter": "python",
-        "value": "cool_test"
-      }
-    ]
-  },
   "languageAdapters": {
     "python": "io.github.nylonmc.core.PythonAdapter"
   },

@@ -16,6 +16,3 @@ class _StderrWrapper(io.StringIO):
             if line != "":
                 _log.error(line)
 sys.stderr = _StderrWrapper()
-
-print("test")
-print("test")
