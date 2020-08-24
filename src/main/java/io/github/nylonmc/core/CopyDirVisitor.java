@@ -25,7 +25,7 @@ public class CopyDirVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                         throws IOException {
 
-        Path targetPath = toPath.resolve(fromPath.relativize(dir));
+        Path targetPath = toPath.resolve(fromPath.relativize(dir).toString());
         if (!Files.exists(targetPath)) {
             Files.createDirectory(targetPath);
         }
@@ -36,7 +36,7 @@ public class CopyDirVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                         throws IOException {
 
-        Files.copy(file, toPath.resolve(fromPath.relativize(file)), copyOption);
+        Files.copy(file, toPath.resolve(fromPath.relativize(file).toString()), copyOption);
         return FileVisitResult.CONTINUE;
     }
 }
