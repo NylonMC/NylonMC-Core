@@ -59,7 +59,7 @@ jar {
 }
 
 shadowJar {
-    relocate 'org.beeware.rubicon', 'io.github.nylonmc.core.shadowed.org.beeware.rubicon'
+    //relocate 'org.beeware.rubicon', 'io.github.nylonmc.core.shadowed.org.beeware.rubicon'
 	configurations = [project.configurations.shadow]
     classifier = "shadow"
 }
