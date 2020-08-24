@@ -1,5 +1,9 @@
 package io.github.nylonmc.core;
 
+import java.util.HashMap;
+import java.util.function.Function;
+
+import io.github.nylonmc.core.proxies.BaseProxy;
 import io.github.nylonmc.core.proxies.ClientModInitializerProxy;
 import io.github.nylonmc.core.proxies.DedicatedServerModInitializerProxy;
 import io.github.nylonmc.core.proxies.ModInitializerProxy;
@@ -13,22 +17,24 @@ import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
 public class PythonAdapter implements LanguageAdapter {
+    private static HashMap<Class, Function<String, BaseProxy>> proxies = new HashMap<>();
+
+    static {
+        putProxy(ModInitializer.class, ModInitializerProxy::new);
+        putProxy(ClientModInitializer.class, ClientModInitializerProxy::new);
+        putProxy(DedicatedServerModInitializer.class, DedicatedServerModInitializerProxy::new);
+        putProxy(PreLaunchEntrypoint.class, PreLaunchEntrypointProxy::new);
+    }
+
+    public static void putProxy(Class classs, Function<String, BaseProxy> proxyCreator) {
+        proxies.put(classs, proxyCreator);
+    }
 
     @Override
     public <T> T create(ModContainer mod, String value, Class<T> type) throws LanguageAdapterException {
-        if (type.equals(ModInitializer.class)) {
-            return type.cast(new ModInitializerProxy(value));
-        }
-        if (type.equals(ClientModInitializer.class)) {
-            return type.cast(new ClientModInitializerProxy(value));
-        }
-        if (type.equals(DedicatedServerModInitializer.class)) {
-            return type.cast(new DedicatedServerModInitializerProxy(value));
-        }
-        if (type.equals(PreLaunchEntrypoint.class)) {
-            return type.cast(new PreLaunchEntrypointProxy(value));
-        }
-        return null;
+        Function<String, BaseProxy> a = proxies.get(type);
+        if (a == null) return null;
+        return type.cast(a.apply(value));
     }
 
 }

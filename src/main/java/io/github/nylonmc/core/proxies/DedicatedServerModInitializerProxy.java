@@ -3,11 +3,10 @@ package io.github.nylonmc.core.proxies;
 import io.github.nylonmc.core.Core;
 import net.fabricmc.api.DedicatedServerModInitializer;
 
-public class DedicatedServerModInitializerProxy implements DedicatedServerModInitializer {
-    private String module;
+public class DedicatedServerModInitializerProxy extends BaseProxy implements DedicatedServerModInitializer {
 
     public DedicatedServerModInitializerProxy(String module) {
-        this.module = module;
+        super(module);
     }
 
     @Override
