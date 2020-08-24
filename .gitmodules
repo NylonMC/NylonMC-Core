@@ -1,0 +1,3 @@
+[submodule "rubicon-java"]
+	path = rubicon-java
+	url = https://github.com/NylonMC/rubicon-java
