@@ -58,6 +58,25 @@ jar {
 	from "LICENSE"
 }
 
+shadowJar {
+    relocate 'org.beeware.rubicon', 'io.github.nylonmc.core.shadowed.org.beeware.rubicon'
+	configurations = [project.configurations.shadow]
+    classifier = "shadow"
+}
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = "${project.group}.${project.archivesBaseName}.shadow"
+}
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
+
+remapJar {
+    dependsOn shadowJar
+    input.set shadowJar.archiveFile.get()
+}
+
 // configure the maven publication
 publishing {
 	publications {
