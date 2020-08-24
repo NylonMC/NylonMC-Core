@@ -27,3 +27,7 @@ bin/
 # fabric
 
 run/
+
+# NylonMC
+
+secret.properties
