@@ -1,4 +1,4 @@
-git submodule update --init --recursive
+git submodule foreach git pull origin master
 rm ./src/main/java/org/beeware/rubicon/Python.java
 mkdir -p ./src/main/java/org/beeware/rubicon/
 cp ./rubicon-java/org/beeware/rubicon/Python.java ./src/main/java/org/beeware/rubicon/Python.java

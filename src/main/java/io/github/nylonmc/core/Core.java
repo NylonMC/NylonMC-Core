@@ -27,7 +27,6 @@ public class Core {
 		if (Python.init(null, NYLONMC_PATH_FOLDER + ":.", null) != 0) {
 			System.out.println("Error initializing Python VM.");
 		}
-		runPythonModule("nylonmc.stdout_hack");
 		System.out.println("Python Loaded");
 	}
 
