@@ -24,22 +24,20 @@ public class Core {
 	static {
 		rebuildNylonmcDirectory();
 		NativeHack.addNativePath(NYLONMC_NATIVE_FOLDER);
-		if (Python.init(null, NYLONMC_PATH_FOLDER + ":.", null) != 0) {
-			System.out.println("Error initializing Python VM.");
-		}
+		PythonThread.init();
 		System.out.println("Python Loaded");
 	}
 
 	/**
-	 * Runs a python module. Using this method ensures python will be statically
+	 * Runs a python module's main() function. Using this method ensures python will be statically
 	 * loaded.
 	 * 
 	 * @param module Module to run __main__ of
 	 */
 	public static void runPythonModule(String module) {
-		if (Python.run(module, new String[0]) != 0) {
-			System.out.println("Error running Python script.");
-		}
+		PythonThread.runPython("import importlib\n" +
+							   "the_module = importlib.import_module(\"" + module + "\")\n" +
+							   "the_module.main()");
 	}
 
 	private static void rebuildNylonmcDirectory() {
