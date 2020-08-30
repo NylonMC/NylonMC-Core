@@ -12,6 +12,9 @@ import java.util.Comparator;
 import java.util.stream.Stream;
 
 import org.beeware.rubicon.Python;
+import org.beeware.rubicon.Python.Remapper;
+
+import io.github.nylonmc.libreflectionremapper.LibReflectionRemapper;
 
 public class Core {
 	public static final String MODID = "nylonmc-core";
@@ -21,9 +24,27 @@ public class Core {
 	public static final String NYLONMC_PATH_FOLDER = NYLONMC_FOLDER + File.separator + "python_path";
 	public static final String NYLONMC_NATIVE_FOLDER = NYLONMC_FOLDER + File.separator + "native";
 
+	private static final Remapper REMAPPER = new Remapper () {
+		public String field(Class cls, String name) {
+			try {
+				return LibReflectionRemapper.getFieldName(cls, name);
+			} catch (Exception e) {
+				return name;
+			}
+		}
+        public String method(Class cls, String name) {
+			try {
+				return LibReflectionRemapper.getFieldName(cls, name);
+			} catch (Exception e) {
+				return name;
+			}
+		}
+	};
+
 	static {
 		rebuildNylonmcDirectory();
 		NativeHack.addNativePath(NYLONMC_NATIVE_FOLDER);
+		Python.setRemapper(REMAPPER);
 		PythonThread.init();
 		System.out.println("Python Loaded");
 	}

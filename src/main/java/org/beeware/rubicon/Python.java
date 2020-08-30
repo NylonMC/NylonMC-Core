@@ -71,6 +71,24 @@ public class Python {
         return pinstance;
     }
 
+    public static interface Remapper {
+        public String field(Class cls, String name);
+        public String method(Class cls, String name);
+    }
+
+    private static Remapper remapper = new Remapper() {
+        public String field(Class cls, String name) {
+            return name;
+        }
+        public String method(Class cls, String name) {
+            return name;
+        }
+    };
+
+    public static void setRemapper(Remapper remapper) {
+        Python.remapper = remapper;
+    }
+
     /**
      * Retrieve the list of methods on a class with a specific name.
      *
@@ -128,7 +146,7 @@ public class Python {
             }
         }
 
-        return methodMap.get(name).toArray(new Method[0]);
+        return methodMap.get(remapper.field(cls, name)).toArray(new Method[0]);
     }
 
     /**
@@ -145,7 +163,7 @@ public class Python {
      */
     public static Field getField(Class cls, String name, boolean isStatic) {
         try {
-            Field field = cls.getField(name);
+            Field field = cls.getField(remapper.field(cls, name));
             int modifiers = field.getModifiers();
 
             if (Modifier.isStatic(modifiers) == isStatic) {
