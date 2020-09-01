@@ -11,7 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 repositories {
@@ -83,22 +83,25 @@ publishing {
 		}
 	}
 
-	def secrets = new Properties()
-	file("secret.properties").withInputStream { secrets.load(it) }
+	if (file("./secret.properties").exists()) {
+		def secrets = new Properties()
+		file("secret.properties").withInputStream { secrets.load(it) }
 
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
-		maven {
-            url "https://gitlab.com/api/v4/projects/20698805/packages/maven"
-            credentials(HttpHeaderCredentials) {
-                name = "Private-Token"
-                value = secrets.getProperty("gitLabPrivateToken") // the variable resides in ~/.gradle/gradle.properties
-            }
-            authentication {
-                header(HttpHeaderAuthentication)
-            }
-        }
+		// select the repositories you want to publish to
+		repositories {
+			// uncomment to publish to the local maven
+			// mavenLocal()
+			maven {
+				url "https://gitlab.com/api/v4/projects/20698805/packages/maven"
+				credentials(HttpHeaderCredentials) {
+					name = "Private-Token"
+					value = secrets.getProperty("gitLabPrivateToken")
+					// the variable resides in ~/.gradle/gradle.properties
+				}
+				authentication {
+					header(HttpHeaderAuthentication)
+				}
+			}
+		}
 	}
 }
